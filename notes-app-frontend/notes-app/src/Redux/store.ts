@@ -1,8 +1,10 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './users/user.reducers';
-import noteReducer from './notes/notes.reducers';
+import { combineReducers, configureStore, Tuple } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import noteReducer from './reducers/notesReducers';
 import { INotesState } from '@/types/notes/INoteState';
 import { IUserState } from '@/types/user/IUserState';
+import userReducer from './reducers/userReducers';
+import rootSaga from './sagas/rootSaga';
 
 export interface IStoreState {
   notes: INotesState,
@@ -14,9 +16,14 @@ const rootReducer = combineReducers({
   user: userReducer,
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: () => new Tuple(sagaMiddleware)
 });
+
+sagaMiddleware.run(rootSaga);
 
 
 export type AppStore = typeof store;

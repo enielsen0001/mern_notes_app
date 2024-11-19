@@ -1,5 +1,5 @@
 
-import { ActionTypes, UserAction } from './user.actions';
+import { UserActionTypes, TUserStateActions } from '../actions/userActions';
 import { IUserState } from '@/types/user/IUserState';
 
 const initialState: IUserState = {
@@ -8,15 +8,15 @@ const initialState: IUserState = {
     isLoading: false
 }
 
-const userReducer = (state = initialState, action: UserAction): IUserState => {
+const userReducer = (state = initialState, action: TUserStateActions): IUserState => {
     switch (action.type) {
-        case ActionTypes.SET_USER:
+        case UserActionTypes.SET_USER:
             return { ...state, user: action.user };
-        case ActionTypes.SET_IS_LOADING:
+        case UserActionTypes.SET_IS_LOADING:
             return { ...state, isLoading: action.isLoading };
-        case ActionTypes.SET_ERROR:
+        case UserActionTypes.SET_ERROR:
             return { ...state, error: action.errorMsg };
-        case ActionTypes.CLEAR:
+        case UserActionTypes.CLEAR:
             return { ...initialState };
         default:
             return state;

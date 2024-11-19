@@ -104,5 +104,41 @@ userRouter.post('/login', async (req, res) => {
     }
 });
 
+userRouter.patch('/', async(req, res) => {
+    try {
+        const { id } = req.headers;
+
+        await UserModel.findByIdAndUpdate({ _id: id }, req.body);
+
+        res.send({
+            message: 'User updated',
+            status: 200
+        });
+    } catch (error) {
+        res.send({
+            message: 'Unable to update User: ' + error.message,
+            status: 500
+        });
+    }
+});
+
+userRouter.delete('/', async(req, res) => {
+    try {
+        const { id } = req.headers;
+
+        await UserModel.findByIdAndDelete({ _id: id });
+
+        res.send({
+            message: 'User deleted',
+            status: 200
+        });
+    } catch (error) {
+        res.send({
+            message: 'Unable to delete user: ' + error.message,
+            status: 500
+        });
+    }
+});
+
 
 module.exports = { userRouter };

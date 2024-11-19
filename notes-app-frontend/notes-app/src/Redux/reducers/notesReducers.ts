@@ -1,5 +1,5 @@
 
-import { ActionTypes, TNotesActions } from "./notes.actions";
+import { NotesActionTypes, TNotesStateActions } from "../actions/notesActions";
 import { INotesState } from "@/types/notes/INoteState";
 
 const initialState: INotesState = {
@@ -10,24 +10,24 @@ const initialState: INotesState = {
     isLoading: false
 }
 
-const noteReducer = (state = initialState, action: TNotesActions) => {
+const noteReducer = (state = initialState, action: TNotesStateActions) => {
     switch (action.type) {
-        case ActionTypes.SET_NOTES:
+        case NotesActionTypes.SET_NOTES:
             return { ...state, allNotes: action.notes };
 
-        case ActionTypes.SET_SELECTED_ID:
+        case NotesActionTypes.SET_SELECTED_ID:
             return { ...state, selectedNoteId: action.id };
 
-        case ActionTypes.SET_CURRENT_ACTION:
+        case NotesActionTypes.SET_CURRENT_ACTION:
             return { ...state, noteAction: action.currentAction };
 
-        case ActionTypes.SET_ERROR:
+        case NotesActionTypes.SET_ERROR:
             return { ...state, error: action.errorMsg };
 
-        case ActionTypes.SET_IS_LOADING:
+        case NotesActionTypes.SET_IS_LOADING:
             return { ...state, isLoading: action.isLoading };
 
-        case ActionTypes.CLEAR:
+        case NotesActionTypes.CLEAR:
             return { ...initialState };
 
         default:
